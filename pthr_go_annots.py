@@ -1,9 +1,11 @@
 import argparse
 import requests
+import json
 from urllib.parse import quote
-from xml.etree import ElementTree
 
 parser = argparse.ArgumentParser()
+parser.add_argument('-s', '--service', help="Panther API service to call (e.g. 'enrich', 'geneinfo')")
+parser.add_argument('-p', '--params_file', help="File path to request parameters JSON file")
 parser.add_argument('-f', '--seq_id_file', help="File path to list of sequence identifiers")
 
 
@@ -91,7 +93,7 @@ class GeneInfoResponse(Response):
     def print_results(self):
         print(len(self.response['search']['mapped_genes']['gene']), "mapped genes")
 
-        display_headers = ["PTHR longID", "Annotation Dataset", "GO Terms"]
+        display_headers = ["PTHRID", "AnnotationDataset", "GOTerms"]
         print("\t".join(display_headers))
 
         results = self.response['search']['mapped_genes']['gene']
@@ -104,17 +106,67 @@ class GeneInfoResponse(Response):
                 print("\t".join([pthr_long_id, dt['content'], go_terms]))
 
 
+class OrthologRequest(Request):
+    def __init__(self):
+        base_url = "http://panthertest3.med.usc.edu:8083/services/oai/pantherdb/ortholog/matchortho?"
+        Request.__init__(self, base_url, OrthologResponse)
+
+
+class OrthologResponse(Response):
+    def print_results(self):
+        display_headers = ["InputGeneID", "MappedID", "OrthologID", "OrthologSymbol", "OrthologType"]
+        print("\t".join(display_headers))
+
+        ortholog_matches = self.response['search']['mapping']['mapped']
+        unique_matches = []
+        for m in ortholog_matches:
+            if m not in unique_matches:
+                unique_matches.append(m)
+        for m in unique_matches:
+            target_gene_symbol = str(m.get('target_gene_symbol')) if 'target_gene_symbol' in m else ""
+            print("\t".join([
+                m['id'],
+                m['gene'],
+                m['target_gene'],
+                target_gene_symbol,
+                m['ortholog']
+                ])
+            )
+
+
+# Handy argument-to-object mapping
+SERVICE_OBJ_LOOKUP = {
+    "enrich": EnrichRequest,
+    "geneinfo": GeneInfoRequest,
+    "ortholog": OrthologRequest,
+}
+
+
+def get_request_obj(service):
+    return SERVICE_OBJ_LOOKUP[service]()
+
+
+def check_args(args):
+    if args.service is None:
+        print("ERROR: Please specify a service to call with --service")
+        exit()
+    elif args.service not in SERVICE_OBJ_LOOKUP:
+        print("ERROR: --service '{}' is not a supported service".format(args.service))
+        exit()
+    if args.params_file is None:
+        print("ERROR: Please specify a parameters file with --params_file")
+        exit()
+    # TODO: Check if args.seq_id_file is req'd for certain services
+
+
 # Script entry point
 if __name__ == "__main__":
     args = parser.parse_args()
 
-    # Hard-coded request parameters - MUST CHANGE FOR DIFFERENT SERVICES
-    request_parameters = {
-        "organism": "9606",
-        "annotDataSet": "GO:0008150",
-        "enrichmentTestType": "FISHER",
-        "correction": "FDR"
-    }
+    check_args(args)  # Any missing arguments should stop script here
+
+    with open(args.params_file) as pf:
+        request_parameters = json.loads(pf.read())
 
     # Parse sequence ID file (from -f argument) and format list to comma-delimited string
     if args.seq_id_file:
@@ -125,9 +177,7 @@ if __name__ == "__main__":
         gene_list = ",".join(seq_ids)
         request_parameters["geneInputList"] = gene_list  # Add these IDs to parameters
 
-    # Create request object - TOGGLE COMMENTING OF Request() OBJECTS TO CONTROL WHICH SERVICE IS CALLED
-    request = EnrichRequest()
-    # request = GeneInfoRequest()
+    request = get_request_obj(args.service)
     # Set parameters
     request.parameters = request_parameters
     # Make the call
