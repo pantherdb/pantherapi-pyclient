@@ -1,5 +1,5 @@
 # pantherapi-pyclient
-Example code for calling Panther API services
+Example client code for calling [Panther API services](http://panthertest3.med.usc.edu:8083/services/tryItOut.jsp?url=%2Fservices%2Fapi%2Fpanther)
 
 ## Installation
 ```
@@ -13,6 +13,22 @@ $ pip install -r requirements.txt
 ## Running
 ```
 $ python3 pthr_go_annots.py --service enrich --params_file enrich_params.json --seq_id_file test_ids.txt
+```
+
+## Usage
+```
+$ python3 pthr_go_annots.py -h
+usage: pthr_go_annots.py [-h] [-s SERVICE] [-p PARAMS_FILE] [-f SEQ_ID_FILE]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s SERVICE, --service SERVICE
+                        Panther API service to call (e.g. 'enrich',
+                        'geneinfo')
+  -p PARAMS_FILE, --params_file PARAMS_FILE
+                        File path to request parameters JSON file
+  -f SEQ_ID_FILE, --seq_id_file SEQ_ID_FILE
+                        File path to list of sequence identifiers
 ```
 
 ## Dependencies
