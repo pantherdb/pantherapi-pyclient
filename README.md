@@ -24,7 +24,7 @@ optional arguments:
   -h, --help            show this help message and exit
   -s SERVICE, --service SERVICE
                         Panther API service to call (e.g. 'enrich',
-                        'geneinfo')
+                        'geneinfo', 'ortholog')
   -p PARAMS_FILE, --params_file PARAMS_FILE
                         File path to request parameters JSON file
   -f SEQ_ID_FILE, --seq_id_file SEQ_ID_FILE
