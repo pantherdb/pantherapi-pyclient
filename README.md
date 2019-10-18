@@ -12,7 +12,7 @@ $ pip install -r requirements.txt
 
 ## Running
 ```
-$ python3 pthr_go_annots.py --service enrich --params_file enrich_params.json --seq_id_file test_ids.txt
+$ python3 pthr_go_annots.py --service enrich --params_file params/enrich.json --seq_id_file resources/test_ids.txt
 ```
 
 ## Usage

@@ -4,7 +4,7 @@ import json
 from urllib.parse import quote
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-s', '--service', help="Panther API service to call (e.g. 'enrich', 'geneinfo')")
+parser.add_argument('-s', '--service', help="Panther API service to call (e.g. 'enrich', 'geneinfo', 'ortholog')")
 parser.add_argument('-p', '--params_file', help="File path to request parameters JSON file")
 parser.add_argument('-f', '--seq_id_file', help="File path to list of sequence identifiers")
 
