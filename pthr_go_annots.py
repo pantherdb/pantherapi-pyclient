@@ -93,8 +93,20 @@ class GeneInfoResponse(Response):
     def print_results(self):
         print(len(self.response['search']['mapped_genes']['gene']), "mapped genes")
 
-        display_headers = ["PTHRID", "AnnotationDataset", "GOTerms"]
+        display_headers = ["PANTHER gene ID", "AnnotationDataset", "Annotation Terms"]
         print("\t".join(display_headers))
+
+        dataset_title_mapping = {
+            "GO:0008150": "GO biological process complete",
+            "GO:0005575": "GO cellular component complete",
+            "GO:0003674": "GO molecular function complete",
+            "ANNOT_TYPE_ID_PANTHER_GO_SLIM_BP": "PANTHER GO-Slim Biological Process",
+            "ANNOT_TYPE_ID_PANTHER_GO_SLIM_CC": "PANTHER GO-Slim Cellular Component",
+            "ANNOT_TYPE_ID_PANTHER_GO_SLIM_MF": "PANTHER GO-Slim Molecular Function",
+            "ANNOT_TYPE_ID_PANTHER_PATHWAY": "PANTHER Pathways",
+            "ANNOT_TYPE_ID_REACTOME_PATHWAY": "Reactome pathways",
+            "ANNOT_TYPE_ID_PANTHER_PC": "PANTHER Protein Class",
+        }
 
         results = self.response['search']['mapped_genes']['gene']
         for r in results:
@@ -103,7 +115,11 @@ class GeneInfoResponse(Response):
                 annotations = dt['annotation_list']['annotation']
                 # Print result line
                 go_terms = ",".join([a['id'] for a in self.handle_annotation(annotations)])
-                print("\t".join([pthr_long_id, dt['content'], go_terms]))
+                if dt['content'] in dataset_title_mapping:
+                    dataset_title = dataset_title_mapping[dt['content']]
+                else:
+                    dataset_title = dt['content']
+                print("\t".join([pthr_long_id, dataset_title, go_terms]))
 
 
 class OrthologRequest(Request):
