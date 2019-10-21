@@ -7,7 +7,7 @@ $ git clone https://github.com/pantherdb/pantherapi-pyclient.git
 $ cd pantherapi-pyclient
 $ python3 -m venv env
 $ . env/bin/activate (bash) or source env/bin/activate.csh (C-shell or tcsh)
-$ pip install -r requirements.txt
+$ pip3 install -r requirements.txt
 ```
 
 ## Running
