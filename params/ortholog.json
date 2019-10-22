@@ -1,4 +1,5 @@
 {
   "organism": "9606",
-  "orthologType": "LDO"
+  "orthologType": "LDO",
+  "targetOrganism": "10090,7227"
 }
