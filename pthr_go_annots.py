@@ -45,7 +45,11 @@ class EnrichRequest(Request):
 
 class EnrichResponse(Response):
     def print_results(self):
-        results = self.response['results']['result']
+        try:
+            results = self.response['results']['result']
+        except:
+            print("ERROR: Parsing response failed. Full response:\n{}".format(self.response))
+            exit()
         print(len(results), "terms in reference list")  # Our result count
 
         display_headers = ["GO Term", "Expected", "Fold enrichment", "raw P value", "FDR", "Term label"]
@@ -111,7 +115,11 @@ class GeneInfoResponse(Response):
             "ANNOT_TYPE_ID_PANTHER_PC": "PANTHER Protein Class",
         }
 
-        results = self.response['search']['mapped_genes']['gene']
+        try:
+            results = self.response['search']['mapped_genes']['gene']
+        except:
+            print("ERROR: Parsing response failed. Full response:\n{}".format(self.response))
+            exit()
         for r in results:
             pthr_long_id = r['accession']
             for dt in self.handle_annotation_data_type(r['annotation_type_list']['annotation_data_type']):
@@ -136,7 +144,11 @@ class OrthologResponse(Response):
         display_headers = ["InputGeneID", "MappedID", "OrthologID", "OrthologSymbol", "OrthologType"]
         print("\t".join(display_headers))
 
-        ortholog_matches = self.response['search']['mapping']['mapped']
+        try:
+            ortholog_matches = self.response['search']['mapping']['mapped']
+        except:
+            print("ERROR: Parsing response failed. Full response:\n{}".format(self.response))
+            exit()
         unique_matches = []
         for m in ortholog_matches:
             if m not in unique_matches:
