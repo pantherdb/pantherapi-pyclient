@@ -56,8 +56,11 @@ class EnrichResponse(Response):
             fold_enrichment = r['fold_enrichment']
             if fold_enrichment > 0:
                 # Print result line
+                term_id = r['term'].get("id")
+                if term_id is None:  # Handling REACTOME "UNCLASSIFIED"
+                    term_id = ""
                 print("\t".join([
-                    r['term'].get("id"),
+                    term_id,
                     str(r['expected']),  # Convert float to string for printing
                     str(fold_enrichment),
                     str(r['pValue']),
