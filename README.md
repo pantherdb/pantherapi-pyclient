@@ -17,7 +17,8 @@ $ python3 pthr_go_annots.py --service enrich --params_file params/enrich.json --
 - Currently, there are three options for --service.
   - _enrich_ -- This is the statistical overrepresentation test on a list of genes.
   - _geneinfo_ -- This call provides GO and pathway annnotations to the uploaded genes.
-  - _ortholog_ -- This call returns the orthologs of the uploaded list. Maximum of 10 genes can be loaded.
+  - _ortholog_ -- This call returns the orthologs of the uploaded list. Maximum of 10 genes can be loaded. The orthologs can be from a specified genome, or from all genomes in the PANTHER database (132 total).<br><br>
+
 
 - The json file in the params folder can be edited according to uploaded data and the type of call.<br><br>
 _enrich.json_  <br>
@@ -30,8 +31,9 @@ _geneinfo.json_<br>
 The organism taxon ID needs to be specified to match the uploaded data.<br><br>
 _ortholog.json_<br>
 There are two items to be specified <br>
-"organism": "**9606**", _-- specify the organism of the uploaded genes_ <br>
-"orthologType": "**LDO**" _-- specify the type of ortholog, e.g., LDO (for least divergent ortholog), or all.__ <br><br>
+"organism": "**9606**", _-- specify the organism of the uploaded genes_ 
+"orthologType": "**LDO**" _-- specify the type of ortholog, e.g., LDO (for least divergent ortholog), or all._
+"targetOrganism": “**10090**,**7227**” _-- specifiy the taxon ids for the target organisms, separated by a comma._<br><br>
 
 **How to find a Taxon ID?**
 
