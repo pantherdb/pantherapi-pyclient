@@ -31,8 +31,8 @@ _geneinfo.json_<br>
 The organism taxon ID needs to be specified to match the uploaded data.<br><br>
 _ortholog.json_<br>
 There are two items to be specified <br>
-"organism": "**9606**", _-- specify the organism of the uploaded genes_ 
-"orthologType": "**LDO**" _-- specify the type of ortholog, e.g., LDO (for least divergent ortholog), or all._
+"organism": "**9606**", _-- specify the organism of the uploaded genes_ <br>
+"orthologType": "**LDO**" _-- specify the type of ortholog, e.g., LDO (for least divergent ortholog), or all._ <br>
 "targetOrganism": “**10090**,**7227**” _-- specifiy the taxon ids for the target organisms, separated by a comma._<br><br>
 
 **How to find a Taxon ID?**
