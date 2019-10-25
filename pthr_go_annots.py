@@ -7,6 +7,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-s', '--service', help="Panther API service to call (e.g. 'enrich', 'geneinfo', 'ortholog')")
 parser.add_argument('-p', '--params_file', help="File path to request parameters JSON file")
 parser.add_argument('-f', '--seq_id_file', help="File path to list of sequence identifiers")
+parser.add_argument('-r', '--ref_seq_id_file', help="File path to list of sequence identifiers for reference list")
 
 
 class Request:
@@ -207,6 +208,15 @@ if __name__ == "__main__":
                 seq_ids.append(l.rstrip())
         gene_list = ",".join(seq_ids)
         request_parameters["geneInputList"] = gene_list  # Add these IDs to parameters
+
+    # Parse sequence ID file (from -f argument) and format list to comma-delimited string
+    if args.ref_seq_id_file:
+        ref_seq_ids = []
+        with open(args.ref_seq_id_file) as ref_seq_f:
+            for l in ref_seq_f.readlines():
+                ref_seq_ids.append(l.rstrip())
+        ref_gene_list = ",".join(ref_seq_ids)
+        request_parameters["refInputList"] = ref_gene_list  # Add these IDs to parameters
 
     request = get_request_obj(args.service)
     # Set parameters
