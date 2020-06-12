@@ -40,7 +40,7 @@ class Response:
 
 class EnrichRequest(Request):
     def __init__(self):
-        base_url = "http://panthertest3.med.usc.edu:8083/services/oai/pantherdb/enrich/overrep?"
+        base_url = "http://pantherdb.org/services/oai/pantherdb/enrich/overrep?"
         Request.__init__(self, base_url, EnrichResponse)
 
 
@@ -77,7 +77,7 @@ class EnrichResponse(Response):
 
 class GeneInfoRequest(Request):
     def __init__(self):
-        base_url = "http://panthertest3.med.usc.edu:8083/services/oai/pantherdb/geneinfo?"
+        base_url = "http://pantherdb.org/services/oai/pantherdb/geneinfo?"
         Request.__init__(self, base_url, GeneInfoResponse)
 
 
