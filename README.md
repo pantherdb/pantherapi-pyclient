@@ -1,5 +1,5 @@
 # pantherapi-pyclient
-Example client code for calling [Panther API services](http://panthertest3.med.usc.edu:8083/services/tryItOut.jsp?url=%2Fservices%2Fapi%2Fpanther)
+Example client code for calling [Panther API services](http://pantherdb.org/services/tryItOut.jsp?url=%2Fservices%2Fapi%2Fpanther)
 
 ## Installation
 ```
@@ -39,18 +39,18 @@ There are three items to be specified <br>
 
 There are three ways to find the exact taxon IDs for genomes supported by PANTHER. 
 
-1. Go to the PANTHER Open API site (http://panthertest3.med.usc.edu:8083/services/tryItOut.jsp?url=%2Fservices%2Fapi%2Fpanther), and use the /supportedgenomes service.
-2. Go directly to the API link page (http://panthertest3.med.usc.edu:8083/services/oai/pantherdb/supportedgenomes). 
-3. Run the following command: curl -X POST "http://panthertest3.med.usc.edu:8083/services/oai/pantherdb/supportedgenomes" -H  "accept: application/json"
+1. Go to the PANTHER Open API site (http://pantherdb.org/services/tryItOut.jsp?url=%2Fservices%2Fapi%2Fpanther), and use the /supportedgenomes service.
+2. Go directly to the API link page (http://pantherdb.org/services/oai/pantherdb/supportedgenomes). 
+3. Run the following command: curl -X POST "http://pantherdb.org/services/oai/pantherdb/supportedgenomes" -H  "accept: application/json"
 
 Use the taxon ID that corresponds to the genomes in the ‘name’ field.
 
 **How to find the ID for supported annotation dataset?**
 
 There are three similar ways to find the IDs or text needed for the supported annotation dataset.
-1. Go to the PANTHER Open API site (http://panthertest3.med.usc.edu:8083/services/tryItOut.jsp?url=%2Fservices%2Fapi%2Fpanther), and use the /supportedannotdatasets service.
-2. Go directly to the API link page (http://panthertest3.med.usc.edu:8083/services/oai/pantherdb/supportedannotdatasets). 
-3. Run the following command: curl -X POST "http://panthertest3.med.usc.edu:8083/services/oai/pantherdb/supportedannotdatasets" -H  "accept: application/json"
+1. Go to the PANTHER Open API site (http://pantherdb.org/services/tryItOut.jsp?url=%2Fservices%2Fapi%2Fpanther), and use the /supportedannotdatasets service.
+2. Go directly to the API link page http://pantherdb.org/services/oai/pantherdb/supportedannotdatasets). 
+3. Run the following command: curl -X POST "http://pantherdb.org/services/oai/pantherdb/supportedannotdatasets" -H  "accept: application/json"
 
 
 Use the text in the ‘id’ field for the parameter files.
