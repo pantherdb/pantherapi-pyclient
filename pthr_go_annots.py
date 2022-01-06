@@ -123,15 +123,18 @@ class GeneInfoResponse(Response):
             exit()
         for r in results:
             pthr_long_id = r['accession']
-            for dt in self.handle_annotation_data_type(r['annotation_type_list']['annotation_data_type']):
-                annotations = dt['annotation_list']['annotation']
-                # Print result line
-                go_terms = ",".join([a['id'] for a in self.handle_annotation(annotations)])
-                if dt['content'] in dataset_title_mapping:
-                    dataset_title = dataset_title_mapping[dt['content']]
-                else:
-                    dataset_title = dt['content']
-                print("\t".join([pthr_long_id, dataset_title, go_terms]))
+            if 'annotation_type_list' in r:
+                for dt in self.handle_annotation_data_type(r['annotation_type_list']['annotation_data_type']):
+                    annotations = dt['annotation_list']['annotation']
+                    # Print result line
+                    go_terms = ",".join([a['id'] for a in self.handle_annotation(annotations)])
+                    if dt['content'] in dataset_title_mapping:
+                        dataset_title = dataset_title_mapping[dt['content']]
+                    else:
+                        dataset_title = dt['content']
+                    print("\t".join([pthr_long_id, dataset_title, go_terms]))
+            else:
+                print("\t".join([pthr_long_id, "", ""]))
 
 
 class OrthologRequest(Request):
