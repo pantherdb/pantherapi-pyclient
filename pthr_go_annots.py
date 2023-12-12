@@ -121,6 +121,8 @@ class GeneInfoResponse(Response):
         except:
             print("ERROR: Parsing response failed. Full response:\n{}".format(self.response))
             exit()
+        if isinstance(results, dict):
+            results = [results]
         for r in results:
             pthr_long_id = r['accession']
             if 'annotation_type_list' in r:
